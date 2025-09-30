@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElonGrokAgent - $EGA</title>
+    <style>
+        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { text-align: center; padding: 20px; background: #111; }
+        nav { background: #000; padding: 10px; text-align: center; }
+        nav a { color: #1DA1F2; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: #9945FF; }
+        section { padding: 40px 20px; max-width: 1200px; margin: auto; }
+        .home { text-align: center; }
+        .stats { display: flex; justify-content: space-around; margin: 20px 0; }
+        .stat { background: #111; padding: 20px; border-radius: 10px; width: 30%; }
+        .button { background: #9945FF; color: #fff; padding: 10px 20px; margin: 10px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
+        .button:hover { background: #1DA1F2; }
+        h1, h2 { color: #9945FF; }
+        ul { list-style-type: none; }
+        footer { text-align: center; padding: 20px; background: #111; font-size: 0.8em; }
+        footer a { color: #1DA1F2; }
+    </style>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="ElonGrokAgent Logo" style="width: 200px;">
+        <h1>ElonGrokAgent</h1>
+        <p>$EGA - The Smartest AI Agent for Decentralized Quantum: Co-creating the Quantum Future!</p>
+    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#community">Community</a>
+    </nav>
+    <section id="home" class="home">
+        <div class="stats">
+            <div class="stat">
+                <h3>1B</h3>
+                <p>Total Supply</p>
+            </div>
+            <div class="stat">
+                <h3>100%</h3>
+                <p>Organic</p>
+            </div>
+            <div class="stat">
+                <h3>Solana</h3>
+                <p>Blockchain</p>
+            </div>
+        </div>
+        <button class="button" onclick="connectWallet()">Connect Decentralized Wallet</button>
+        <a href="https://t.me/elonGrokAgent" class="button">Join Telegram</a>
+        <a href="#tokenomics" class="button">View Tokenomics</a>
+        <a href="https://moonshot.money/" class="button">Buy $EGA on Moonshot</a>
+        <p>We don't pay for promotions: Your creativity fuels our rocket!</p>
+    </section>
+    <section id="about">
+        <h2>About Us</h2>
+        <p>Our Mission: $EGA is 100% organic, built by the Quantum Tribe without paid promotions.</p>
+        <p>The Quantum Tribe: A community of tech explorers and meme pioneers shaping $EGA together.</p>
+        <p>Technology: Powered by Solana for speed and low fees.</p>
+    </section>
+    <section id="tokenomics">
+        <h2>Tokenomics</h2>
+        <h3>Token Details</h3>
+        <p>Token Symbol: $EGA</p>
+        <p>Blockchain: Solana</p>
+        <p>Total Supply: 1,000,000,000 EGA</p>
+        <p>Contract Address: [To Be Announced]</p>
+        <h3>Token Distribution</h3>
+        <ul>
+            <li>60% - Community Rewards</li>
+            <li>25% - Liquidity Pool</li>
+            <li>10% - Development</li>
+            <li>5% - Marketing (Organic Only)</li>
+        </ul>
+    </section>
+    <section id="roadmap">
+        <h2>Roadmap</h2>
+        <div>
+            <h3>Phase 1: Launch</h3>
+            <ul>
+                <li>✅ Community Formation</li>
+                <li>✅ Website Launch</li>
+                <li>✅ Social Setup</li>
+                <li>🔄 Token Contract Deployment</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Phase 2: Community Growth</h3>
+            <ul>
+                <li>🔄 Meme Challenge Launch</li>
+                <li>📅 DEX Listing</li>
+                <li>📅 Community Governance</li>
+                <li>NFT Collection</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Phase 3: Ecosystem Expansion</h3>
+            <ul>
+                <li>DApp Development</li>
+                <li>📅 Partnerships</li>
+                <li>📅 Mobile App</li>
+                <li>DAO Formation</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Phase 4: Quantum Mission</h3>
+            <ul>
+                <li>📅 Major Exchange Listings</li>
+                <li>📅 Real-World Utility</li>
+                <li>📅 Global Community</li>
+                <li>🚀 To the Moon!</li>
+            </ul>
+        </div>
+    </section>
+    <section id="community">
+        <h2>Community & Memes</h2>
+        <p>📢 Follow @ElonGrokAgent on X</p>
+        <p>💬 Join the Quantum Tribe on Telegram</p>
+        <p>🔥 Meme Challenge: #ElonGrokMemeChallenge</p>
+        <p>Participate in the challenge: Your meme could become the tribe's first NFT!</p>
+    </section>
+    <footer>
+        <a href="#suggest">Suggest Site Improvements</a> | <a href="#privacy">Privacy Policy</a> | 100% Organic Growth (No Investments)<br>
+        <a href="#home">Back to Top</a>
+    </footer>
+    <script>
+        async function connectWallet() {
+            if (window.solana) {
+                try {
+                    await window.solana.connect();
+                    alert('Wallet connected successfully!');
+                } catch (err) {
+                    alert('Connection rejected or error: ' + err.message);
+                }
+            } else {
+                alert('Solana wallet not detected. Install Phantom or similar.');
+            }
+        }
+    </script>
+</body>
+</html>
