@@ -1,145 +1,506 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElonGrokAgent - $EGA</title>
+    <meta name="description" content="#LunatiMemeChallenge: Galería de memes y AI para marketing seguro en LunatiSynergy ($LUNSY). Co-crea, vota y anticipa tendencias.">
+    <title>#LunatiMemeChallenge - Tribu Lunar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <style>
-        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
-        header { text-align: center; padding: 20px; background: #111; }
-        nav { background: #000; padding: 10px; text-align: center; }
-        nav a { color: #1DA1F2; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        nav a:hover { color: #9945FF; }
-        section { padding: 40px 20px; max-width: 1200px; margin: auto; }
-        .home { text-align: center; }
-        .stats { display: flex; justify-content: space-around; margin: 20px 0; }
-        .stat { background: #111; padding: 20px; border-radius: 10px; width: 30%; }
-        .button { background: #9945FF; color: #fff; padding: 10px 20px; margin: 10px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .button:hover { background: #1DA1F2; }
-        h1, h2 { color: #9945FF; }
-        ul { list-style-type: none; }
-        footer { text-align: center; padding: 20px; background: #111; font-size: 0.8em; }
-        footer a { color: #1DA1F2; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #0A0A2A, #1A1A4A);
+            color: #E0E0E0;
+            line-height: 1.8;
+            font-size: 16px;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        body.light-mode {
+            background: linear-gradient(to bottom, #F0F0F5, #E0E0E5);
+            color: #333333;
+        }
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(to bottom, #1A1A4A, #2A2A6A);
+            position: relative;
+            border-bottom: 2px solid #D4AF37;
+        }
+        header img {
+            width: 180px;
+            border-radius: 50%;
+            border: 4px solid #D4AF37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            color: #D4AF37;
+            margin: 20px 0;
+            letter-spacing: 1px;
+        }
+        header p {
+            font-style: italic;
+            color: #B0B0B0;
+            font-size: 1.2em;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+            background-color: rgba(30, 58, 138, 0.8);
+            margin: 0;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 25px;
+        }
+        nav a {
+            color: #D4AF37;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        nav a:hover {
+            color: #FFFFFF;
+            text-shadow: 0 0 10px #D4AF37;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .left-section, .right-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background-color: rgba(34, 34, 34, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: box-shadow 0.4s;
+        }
+        .left-section {
+            margin-right: 20px;
+        }
+        .right-section {
+            margin-left: 20px;
+        }
+        .left-section:hover, .right-section:hover {
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: #D4AF37;
+            margin-bottom: 20px;
+        }
+        .marketing-cta {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .marketing-cta button {
+            background-color: #A855F7;
+            color: #E0E0E0;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .marketing-cta button:hover {
+            background-color: #D4AF37;
+            box-shadow: 0 0 20px #D4AF37;
+        }
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+        .benefits-list li {
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .benefits-list li:before {
+            content: '\f005';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+        }
+        .testimonials {
+            margin-top: 40px;
+        }
+        .testimonial {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(51, 51, 51, 0.9);
+            border-radius: 10px;
+            font-style: italic;
+            color: #C0C0C0;
+        }
+        #wallet-section, #staking-section, #opensea-section, #upload-form {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(51, 51, 51, 0.9);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
+        }
+        button {
+            background-color: #A855F7;
+            color: #E0E0E0;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border-radius: 8px;
+        }
+        button:hover {
+            background-color: #D4AF37;
+            box-shadow: 0 0 15px #D4AF37;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #D4AF37;
+            background-color: #2A2A2A;
+            color: #E0E0E0;
+        }
+        a {
+            color: #A855F7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #D4AF37;
+        }
+        .meme-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .meme-item {
+            border: 2px solid #D4AF37;
+            padding: 20px;
+            background-color: rgba(34, 34, 34, 0.9);
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        .meme-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.95);
+            padding-top: 60px;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #E0E0E0;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover {
+            color: #D4AF37;
+        }
+        #leaderboard {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: rgba(51, 51, 51, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        #leaderboard h3 {
+            text-align: center;
+            color: #D4AF37;
+        }
+        #leaderboard-list {
+            list-style: none;
+            padding: 0;
+        }
+        #leaderboard-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #2A2A2A;
+            border-radius: 8px;
+            text-align: center;
+        }
+        #mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #D4AF37;
+        }
+        body.light-mode {
+            background: linear-gradient(to bottom, #F0F0F5, #E0E0E5);
+            color: #333333;
+        }
+        body.light-mode header {
+            background: linear-gradient(to bottom, #FFFFFF, #F0F0F5);
+        }
+        body.light-mode .meme-item {
+            background-color: #FFFFFF;
+        }
+        body.light-mode .info-section, body.light-mode .community-section {
+            background-color: #F0F0F5;
+        }
+        body.light-mode footer {
+            background-color: #E0E0E5;
+        }
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+            .left-section, .right-section {
+                margin: 0 0 20px 0;
+            }
+            .meme-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
 </head>
 <body>
+    <div id="mode-toggle" onclick="toggleMode()"><i class="fas fa-moon"></i></div>
     <header>
-        <img src="logo.png" alt="ElonGrokAgent Logo" style="width: 200px;">
-        <h1>ElonGrokAgent</h1>
-        <p>$EGA - The Smartest AI Agent for Decentralized Quantum: Co-creating the Quantum Future!</p>
+        <img src="lunati-logo.png" alt="Logo LunatiSynergy" />
+        <h1>#LunatiMemeChallenge</h1>
+        <p>Co-crea memes, videos y enlaces con la Tribu Lunar</p>
     </header>
     <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#tokenomics">Tokenomics</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#community">Community</a>
-    </nav>
-    <section id="home" class="home">
-        <div class="stats">
-            <div class="stat">
-                <h3>1B</h3>
-                <p>Total Supply</p>
-            </div>
-            <div class="stat">
-                <h3>100%</h3>
-                <p>Organic</p>
-            </div>
-            <div class="stat">
-                <h3>Solana</h3>
-                <p>Blockchain</p>
-            </div>
-        </div>
-        <button class="button" onclick="connectWallet()">Connect Decentralized Wallet</button>
-        <a href="https://t.me/elonGrokAgent" class="button">Join Telegram</a>
-        <a href="#tokenomics" class="button">View Tokenomics</a>
-        <a href="https://moonshot.money/" class="button">Buy $EGA on Moonshot</a>
-        <p>We don't pay for promotions: Your creativity fuels our rocket!</p>
-    </section>
-    <section id="about">
-        <h2>About Us</h2>
-        <p>Our Mission: $EGA is 100% organic, built by the Quantum Tribe without paid promotions.</p>
-        <p>The Quantum Tribe: A community of tech explorers and meme pioneers shaping $EGA together.</p>
-        <p>Technology: Powered by Solana for speed and low fees.</p>
-    </section>
-    <section id="tokenomics">
-        <h2>Tokenomics</h2>
-        <h3>Token Details</h3>
-        <p>Token Symbol: $EGA</p>
-        <p>Blockchain: Solana</p>
-        <p>Total Supply: 1,000,000,000 EGA</p>
-        <p>Contract Address: [To Be Announced]</p>
-        <h3>Token Distribution</h3>
         <ul>
-            <li>60% - Community Rewards</li>
-            <li>25% - Liquidity Pool</li>
-            <li>10% - Development</li>
-            <li>5% - Marketing (Organic Only)</li>
+            <li><a href="#marketing">Marketing</a></li>
+            <li><a href="#gallery">Galería</a></li>
+            <li><a href="#community">Comunidad</a></li>
         </ul>
+    </nav>
+    <main>
+        <section class="left-section" id="marketing">
+            <h2 class="section-title">Problemas y Soluciones</h2>
+            <p>Los traders reaccionan tarde a narrativas, ciegos a flujos de liquidez, abrumados por ruido, expuestos a riesgos ocultos, y usan herramientas genéricas sin personalización.</p>
+            <ul class="benefits-list">
+                <li>Anticipa movimientos antes de picos.</li>
+                <li>Detecta narrativas tempranas (IA, memes, DeFi).</li>
+                <li>Rastrea flujos de whales + liquidez en tiempo real.</li>
+                <li>Filtra ruido con validación comunitaria.</li>
+                <li>Detecta riesgos, dumps y anomalías tempranos.</li>
+                <li>Ventaja comercial personalizada con IA.</li>
+            </ul>
+            <div class="marketing-cta">
+                <button onclick="window.location.href='https://staking.lunatisynergy.com';">Únete a la Revolución Lunar</button>
+            </div>
+        </section>
+        <section class="right-section" id="gallery">
+            <h2 class="section-title">Galería de Memes</h2>
+            <div class="meme-gallery">
+                <div class="meme-item">
+                    <img src="placeholder.png" alt="Meme 1" data-caption="Descripción del Meme 1">
+                    <p>Título del Meme 1</p>
+                    <a href="https://example.com" target="_blank">Enlace relacionado</a>
+                    <button class="vote-btn" onclick="vote(1)">Votar <i class="fas fa-thumbs-up"></i></button>
+                    <span class="vote-count" id="vote1">0 votos</span>
+                </div>
+                <div class="meme-item">
+                    <video controls>
+                        <source src="placeholder-video.mp4" type="video/mp4">
+                    </video>
+                    <p>Título del Video 1</p>
+                    <a href="https://example.com" target="_blank">Enlace relacionado</a>
+                    <button class="vote-btn" onclick="vote(2)">Votar <i class="fas fa-thumbs-up"></i></button>
+                    <span class="vote-count" id="vote2">0 votos</span>
+                </div>
+                <div id="upload-form">
+                    <h3>Sube tu Meme, Video o Enlace</h3>
+                    <input type="file" id="media-file" accept="image/*,video/*">
+                    <input type="text" id="media-title" placeholder="Título">
+                    <input type="text" id="media-desc" placeholder="Descripción">
+                    <input type="url" id="media-link" placeholder="Enlace relacionado (opcional)">
+                    <button onclick="uploadMedia()">Subir</button>
+                </div>
+            </div>
+            <div id="leaderboard">
+                <h3>Leaderboard de Votos</h3>
+                <ul id="leaderboard-list"></ul>
+            </div>
+        </section>
+    </main>
+    <section id="how-it-works" class="info-section">
+        <h2 class="section-title">Cómo Funciona</h2>
+        <p>De datos crudos a insights accionables en segundos: Detecta señales, valida con comunidad, personaliza tu borde.</p>
     </section>
-    <section id="roadmap">
-        <h2>Roadmap</h2>
-        <div>
-            <h3>Phase 1: Launch</h3>
-            <ul>
-                <li>✅ Community Formation</li>
-                <li>✅ Website Launch</li>
-                <li>✅ Social Setup</li>
-                <li>🔄 Token Contract Deployment</li>
-            </ul>
-        </div>
-        <div>
-            <h3>Phase 2: Community Growth</h3>
-            <ul>
-                <li>🔄 Meme Challenge Launch</li>
-                <li>📅 DEX Listing</li>
-                <li>📅 Community Governance</li>
-                <li>NFT Collection</li>
-            </ul>
-        </div>
-        <div>
-            <h3>Phase 3: Ecosystem Expansion</h3>
-            <ul>
-                <li>DApp Development</li>
-                <li>📅 Partnerships</li>
-                <li>📅 Mobile App</li>
-                <li>DAO Formation</li>
-            </ul>
-        </div>
-        <div>
-            <h3>Phase 4: Quantum Mission</h3>
-            <ul>
-                <li>📅 Major Exchange Listings</li>
-                <li>📅 Real-World Utility</li>
-                <li>📅 Global Community</li>
-                <li>🚀 To the Moon!</li>
-            </ul>
-        </div>
+    <section id="roadmap" class="info-section">
+        <h2 class="section-title">Hoja de Ruta</h2>
+        <p>Fase 1: Lanzamiento y configuración – Token $LUNSY, comunidad.<br>Fase 2: Expansión de productos – Funciones mejoradas, marketing.<br>Fase 3: Versión beta – Feedback comunidad.<br>Fase 4: Liberación completa – Crecimiento continuo.</p>
     </section>
-    <section id="community">
-        <h2>Community & Memes</h2>
-        <p>📢 Follow @ElonGrokAgent on X</p>
-        <p>💬 Join the Quantum Tribe on Telegram</p>
-        <p>🔥 Meme Challenge: #ElonGrokMemeChallenge</p>
-        <p>Participate in the challenge: Your meme could become the tribe's first NFT!</p>
+    <section id="community" class="community-section">
+        <h2 class="section-title">Nuestra Comunidad</h2>
+        <p>¡Únete a la conversación y forma parte de la Tribu Lunar!</p>
+        <a href="https://x.com/TribuLunarOficial" target="_blank"><i class="fab fa-twitter"></i> X</a>
+        <a href="https://t.me/TribuLunar" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
     </section>
     <footer>
-        <a href="#suggest">Suggest Site Improvements</a> | <a href="#privacy">Privacy Policy</a> | 100% Organic Growth (No Investments)<br>
-        <a href="#home">Back to Top</a>
+        <p>&copy; 2025 La Tribu Lunar</p>
+        <p>Aviso: No somos asesores financieros. Invertir conlleva riesgos. Política de privacidad: [enlace].</p>
     </footer>
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="imgModal">
+        <div id="caption"></div>
+    </div>
     <script>
-        async function connectWallet() {
+        const firebaseConfig = {
+            apiKey: "AIzaSyCRTd8E3LbfBzVMJnrKo2ODic7LH7Ib3QA",
+            authDomain: "lunatisynergy-3ae5e.firebaseapp.com",
+            projectId: "lunatisynergy-3ae5e",
+            storageBucket: "lunatisynergy-3ae5e.appspot.com",
+            messagingSenderId: "432528047009",
+            appId: "1:432528047009:web:0b94c71013e84b8545a9e0"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+        const db = firebase.firestore();
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("imgModal");
+        const captionText = document.getElementById("caption");
+        const closeBtn = document.querySelector(".close");
+        document.querySelectorAll(".meme-item img").forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.dataset.caption;
+            }
+        });
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+        const connectWalletBtn = document.getElementById("connect-wallet");
+        const walletAddress = document.getElementById("wallet-address");
+        connectWalletBtn.onclick = async () => {
             if (window.solana) {
                 try {
-                    await window.solana.connect();
-                    alert('Wallet connected successfully!');
+                    const resp = await window.solana.connect();
+                    walletAddress.innerText = 'Wallet conectada: ' + resp.publicKey.toString();
+                    connectWalletBtn.textContent = 'Desconectar Wallet';
+                    connectWalletBtn.onclick = () => window.solana.disconnect().then(() => {
+                        walletAddress.innerText = '';
+                        connectWalletBtn.textContent = 'Conectar Wallet';
+                    });
                 } catch (err) {
-                    alert('Connection rejected or error: ' + err.message);
+                    alert("Error al conectar wallet: " + err.message);
                 }
             } else {
-                alert('Solana wallet not detected. Install Phantom or similar.');
+                alert("Instala una wallet Solana como Phantom, Coinbase o Bitget Wallet.");
             }
+        };
+        function uploadMedia() {
+            const file = document.getElementById("media-file").files[0];
+            const title = document.getElementById("media-title").value;
+            const desc = document.getElementById("media-desc").value;
+            const link = document.getElementById("media-link").value;
+            if (file) {
+                const storageRef = storage.ref('media/' + file.name);
+                storageRef.put(file).then(() => {
+                    storageRef.getDownloadURL().then(url => {
+                        db.collection('media').add({
+                            title: title,
+                            desc: desc,
+                            link: link,
+                            url: url,
+                            type: file.type.startsWith('video') ? 'video' : 'image',
+                            votes: 0
+                        }).then(() => {
+                            alert("Media subido y guardado!");
+                            loadMedia();
+                        });
+                    });
+                }).catch(err => alert("Error al subir: " + err.message));
+            } else {
+                alert("Selecciona un archivo");
+            }
+        }
+        function loadMedia() {
+            const gallery = document.querySelector(".meme-gallery");
+            gallery.innerHTML = '';
+            db.collection('media').orderBy('votes', 'desc').get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const newItem = document.createElement("div");
+                    newItem.className = "meme-item";
+                    const mediaType = data.type === 'video' ? `<video controls><source src="${data.url}" type="video/mp4"></video>` : `<img src="${data.url}" alt="${data.title}" data-caption="${data.desc}">`;
+                    newItem.innerHTML = `${mediaType}<p>${data.title}</p><a href="${data.link}" target="_blank">${data.link ? 'Enlace' : ''}</a><button class="vote-btn" onclick="vote('${doc.id}')">Votar <i class="fas fa-thumbs-up"></i></button><span class="vote-count" id="vote${doc.id}">${data.votes} votos</span>`;
+                    gallery.appendChild(newItem);
+                });
+            });
+            const leaderboardList = document.getElementById("leaderboard-list");
+            leaderboardList.innerHTML = '';
+            db.collection('media').orderBy('votes', 'desc').limit(10).get().then(snapshot => {
+                snapshot.forEach((doc, index) => {
+                    const data = doc.data();
+                    const listItem = document.createElement("li");
+                    listItem.innerText = `${index + 1}. ${data.title} (${data.votes} votos)`;
+                    leaderboardList.appendChild(listItem);
+                });
+            });
+        }
+        function vote(id) {
+            db.collection('media').doc(id).update({
+                votes: firebase.firestore.FieldValue.increment(1)
+            }).then(() => {
+                loadMedia();
+            });
+        }
+        loadMedia();
+        function toggleMode() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('mode', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+            document.getElementById("mode-toggle").innerHTML = document.body.classList.contains('light-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+        if (localStorage.getItem('mode') === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById("mode-toggle").innerHTML = '<i class="fas fa-sun"></i>';
         }
     </script>
 </body>
